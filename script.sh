@@ -10,7 +10,7 @@ echo "abaixo está o comando correto:"
 echo ""
 echo "sudo ./createRepoGit.sh"
 
-# sleep 7
+sleep 7
 echo "------------------------------------------------------------------"
 echo "|       Criaremos duas pastas, uma para o repósitorio raiz        |"
 echo "|             e outra pasta para o repósitorio .git               |"
