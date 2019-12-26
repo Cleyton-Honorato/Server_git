@@ -1,0 +1,1 @@
+git --work-tree=/var/www/Cleyton --git-dir=/var/www/Repo.git checkout -f
