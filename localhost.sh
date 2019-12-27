@@ -1,72 +1,75 @@
-#!/bin/sh
+# !/bin/sh
 
 reset
 
 echo "------- Antes de iniciar ... -------"
-echo "Esse arquivo é para ser executado no servidor GIT"
-echo "tenha certeza que este arquivo está sendo executado com permissão"
-echo "administrativa (sudo), caso não saiba"
-echo "abaixo está o comando correto:"
+echo "Esse arquivo é para iniciar de forma correta"
+echo "um projeto utilizando o GIT, verifique se no servidor você"
+echo "já rodou o .sh de config do serve"
+echo "precisamos dele para que de tudo certo"
 echo ""
-echo "sudo ./createRepoGit.sh"
 
 sleep 7
+
 echo "------------------------------------------------------------------"
-echo "|       Criaremos duas pastas, uma para o repósitorio raiz        |"
-echo "|             e outra pasta para o repósitorio .git               |"
+echo "|     Criaremos uma para do repósitorio que ira ficar na raiz     |"
 echo "------------------------------------------------------------------"
 
-# Criando pastas para os repósitorios
-echo "-------------------------------------------"
-echo "|       Digite o nome da pasta raiz        |"
-echo "-------------------------------------------"
+echo "----------------------------------"
+echo "|     Digite o nome da pasta     |"
+echo "----------------------------------"
 
 read raiz
-
 mkdir $raiz
 
-echo "-------------------------------------------"
-echo "|       Digite o nome da pasta .git        |"
-echo "-------------------------------------------"
+echo "----------------------------------"
+echo "|        Iniciando o git          |"
+echo "----------------------------------"
+
+cd $raiz
+git init
+git add .
+git commit -m "Subindo projeto"
+
+echo "-------------------------------------------------"
+echo "|        Agora iremos mandar o projeto          |"
+echo "|        para a pasta raiz do servidor          |"
+echo "-------------------------------------------------"
+
+echo '================================================='
+
+echo "----------------------------------"
+echo "|  Digite o usuario, ex: root     |"
+echo "----------------------------------"
+
+read user
+
+echo "----------------------------------"
+echo "|   Digite o ip do servidor      |"
+echo "----------------------------------"
+
+read ip
+
+echo "--------------------------------------------------"
+echo "|   Digite o nome da pasta .git do servidor      |"
+echo "--------------------------------------------------"
 
 read repo
 
-mkdir $repo.git
+cd /home/kassio/Estudos/teste_git/$raiz
 
-clear
+touch texto.txt
 
-echo "-------------------------------------------"
-echo "|   Iniciando git no repósitorio .git      |"
-echo "-------------------------------------------"
+echo "Arquivo de teste" >> "/home/kassio/Estudos/teste_git/$raiz/texto.txt"
 
-cd $repo.git
-git init --bare
+git add .
 
-clear
+git commit -m "subindo projeto"
 
+git remote add origin ssh://$user@$ip:/var/www/html/$repo.git
 
-echo ""
-echo " Agora iremos configurar o deploy da aplicação, ou seja, a atualização"
-echo " automatica no servidor. configuração padrão do git HOOK"
-echo ""
-echo "-------------------------------------------------------------------------"
+git push origin +master:refs/heads/master
 
-echo "----------------------------------------------------------"
-echo "|   Entrando na pasta hook e criando o post-receive      |"
-echo "----------------------------------------------------------"
-
-cd hooks
-touch post-receive
-chmod +x post-receive
-
-
-echo "-------------------------------------------"
-echo "|   Adicionando linha no post-receive      |"
-echo "-------------------------------------------"
-
-echo git --work-tree=/var/www/$raiz  --git-dir=/var/www/$repo.git checkout -f >> "/var/www/$repo.git/hooks/post-receive"
-
-echo "-------------------------------------------"
-echo "|   Finalizado agora vá na sua maquina     |"
-echo "|       e execute o outro scritp           |"
-echo "-------------------------------------------"
+echo "----------------------------------------------------------------"
+echo "|    Finalizado agora basta criar qualquer arquivo e testar     |"
+echo "----------------------------------------------------------------"
