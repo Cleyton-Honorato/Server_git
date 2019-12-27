@@ -7,7 +7,7 @@ Neste tutorial venho criar um executável para a criação de um servidor git ma
 Basta apenas baixar o arquivo torná lo executavel
 
 ```shell
-  chmod +x script.sh
+  chmod +x Server.sh
 ```
 
 e executar com o comando 
